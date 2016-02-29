@@ -17,7 +17,6 @@ namespace AppSyndication.SingleSignOnService.Web
     {
         public void Configuration(IAppBuilder app)
         {
-            //this.ConfigureAuth(app);
 #if DEBUG
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -25,12 +24,14 @@ namespace AppSyndication.SingleSignOnService.Web
                 .CreateLogger();
 #endif
 
+            var environment = new SsoServiceEnvironmentConfiguration();
+
             var options = new IdentityServerOptions
             {
                 SiteName = "AppSyndication Single Sign-On Service",
-                SigningCertificate = LoadCertificate(),
+                SigningCertificate = LoadCertificate(environment),
 
-                Factory = ConfigureFactory(),
+                Factory = ConfigureFactory(environment),
 
                 AuthenticationOptions =
                 {
@@ -56,14 +57,25 @@ namespace AppSyndication.SingleSignOnService.Web
             app.UseIdentityServer(options);
         }
 
-        private static X509Certificate2 LoadCertificate()
+        private static X509Certificate2 LoadCertificate(SsoServiceEnvironmentConfiguration environment)
         {
-            return new X509Certificate2($@"{AppDomain.CurrentDomain.BaseDirectory}\bin\idsrv3test.pfx", "idsrv3test");
+            if (environment.Environment == "Dev")
+            {
+                return new X509Certificate2($@"{AppDomain.CurrentDomain.BaseDirectory}\bin\as-id-dev.pfx-dev", "P@ssw0rd1");
+            }
+
+            using (var certStore = new X509Store(StoreName.My, StoreLocation.CurrentUser))
+            {
+                certStore.Open(OpenFlags.ReadOnly);
+                var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, environment.CertificateThumprint, false);
+
+                return (certCollection.Count > 0) ? certCollection[0] : null;
+            }
         }
 
-        private static IdentityServerServiceFactory ConfigureFactory()
+        private static IdentityServerServiceFactory ConfigureFactory(SsoServiceEnvironmentConfiguration environment)
         {
-            var connectionString = "UseDevelopmentStorage=true;";
+            var connectionString = environment.TableStorageConnectionString;
 
             var factory = new IdentityServerServiceFactory();
 
