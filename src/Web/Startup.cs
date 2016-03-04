@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using FireGiant.MembershipReboot.AzureStorage;
 using IdentityServer3.Core.Configuration;
@@ -68,6 +69,11 @@ namespace AppSyndication.SingleSignOnService.Web
             {
                 certStore.Open(OpenFlags.ReadOnly);
                 var certCollection = certStore.Certificates.Find(X509FindType.FindByThumbprint, environment.CertificateThumprint, false);
+
+                if (certCollection.Count == 0)
+                {
+                    throw new InvalidDataException($"Expected to find certificate by thumbprint: {environment.CertificateThumprint}");
+                }
 
                 return (certCollection.Count > 0) ? certCollection[0] : null;
             }
