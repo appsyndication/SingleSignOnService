@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using FireGiant.MembershipReboot.AzureStorage;
 using IdentityServer3.Core.Configuration;
@@ -18,6 +18,8 @@ namespace AppSyndication.SingleSignOnService.Web
     {
         public void Configuration(IAppBuilder app)
         {
+            Trace.TraceInformation("Starting up.");
+
 #if DEBUG
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -56,6 +58,8 @@ namespace AppSyndication.SingleSignOnService.Web
             };
 
             app.UseIdentityServer(options);
+
+            Trace.TraceInformation("Started.");
         }
 
         private static X509Certificate2 LoadCertificate(SsoServiceEnvironmentConfiguration environment)
@@ -72,10 +76,11 @@ namespace AppSyndication.SingleSignOnService.Web
 
                 if (certCollection.Count == 0)
                 {
-                    throw new InvalidDataException($"Expected to find certificate by thumbprint: {environment.CertificateThumprint}");
+                    Trace.TraceError("Failed to load certificate with thumbprint: {0}", environment.CertificateThumprint);
+                    return null;
                 }
 
-                return (certCollection.Count > 0) ? certCollection[0] : null;
+                return certCollection[0];
             }
         }
 
