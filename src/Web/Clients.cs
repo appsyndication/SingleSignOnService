@@ -14,6 +14,31 @@ namespace AppSyndication.SingleSignOnService.Web
                 new Client
                 {
                     Enabled = true,
+                    ClientName = "Asp.NET Core Test Client",
+                    ClientId="coretest",
+                    ClientSecrets = new List<Secret>()
+                    {
+                        new Secret("secret".Sha256())
+                    },
+
+                    Flow = Flows.AuthorizationCode,
+
+                    RedirectUris = new List<string>
+                    {
+                        "https://localhost:44319/signin-oidc",
+                    },
+
+                    //PostLogoutRedirectUris = new List<string>
+                    //{
+                    //    "https://localhost:44319/logout"
+                    //},
+
+                    AllowAccessToAllScopes = true
+                }
+                ,
+                new Client
+                {
+                    Enabled = true,
                     ClientName = "AppSyndication Upload Web Service",
                     ClientId = "as-upload-websvc",
                     ClientSecrets = new List<Secret>()
@@ -21,7 +46,7 @@ namespace AppSyndication.SingleSignOnService.Web
                         new Secret("secret".Sha256())
                     },
 
-                    Flow = Flows.Hybrid,
+                    Flow = Flows.AuthorizationCode,
 
                     //AllowedScopes = new List<string>
                     //{
@@ -34,7 +59,7 @@ namespace AppSyndication.SingleSignOnService.Web
 
                     RedirectUris = new List<string>
                     {
-                        "https://localhost:44300/home/about",
+                        "https://localhost:44367/signin-oidc",
                         //"https://localhost:44300/cb",
                     },
 
