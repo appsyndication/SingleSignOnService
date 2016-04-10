@@ -154,6 +154,10 @@
       <HintPath>..\..\packages\IdentityModel.1.0.0\lib\net45\IdentityModel.Net45.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="IdentityServer3, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\IdentityServer3.2.4.0\lib\net45\IdentityServer3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
@@ -276,10 +280,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\test\AppSyndicationTests\IdentityServer3\source\Core\Core.csproj">
-      <Project>{fb9e026e-bab3-498a-a954-b93b05c146a5}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AzureStorageMembershipReboot\AzureStorageMembershipReboot.csproj">
       <Project>{e42593a6-b6cb-48ae-bc26-33bb819a4a55}</Project>
       <Name>AzureStorageMembershipReboot</Name>
