@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using FireGiant.MembershipReboot.AzureStorage;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Services;
+using IdentityServer3.Core.Services.Default;
 using IdentityServer3.Core.Services.InMemory;
 using IdentityServer3.MembershipReboot;
 using Microsoft.Owin;
@@ -34,14 +36,23 @@ namespace AppSyndication.SingleSignOnService.Web
                 SiteName = "AppSyndication Single Sign-On Service",
                 SigningCertificate = LoadCertificate(environment),
 
+                CspOptions = new CspOptions()
+                {
+                    FontSrc = "https://appsyndication.azureedge.net https://maxcdn.bootstrapcdn.com",
+                    ScriptSrc = "https://appsyndication.azureedge.net https://code.jquery.com https://maxcdn.bootstrapcdn.com",
+                    StyleSrc = "https://appsyndication.azureedge.net https://maxcdn.bootstrapcdn.com",
+                },
+
                 Factory = ConfigureFactory(environment),
 
                 AuthenticationOptions =
                 {
                     EnableSignOutPrompt = false,
-                    EnablePostSignOutAutoRedirect = true,
+                    //EnablePostSignOutAutoRedirect = true,
+                    //PostSignOutAutoRedirectDelay = 0,
                 },
 
+                PublicOrigin = environment.PublicOrigin,
                 EnableWelcomePage = false,
 
 #if DEBUG
@@ -52,12 +63,32 @@ namespace AppSyndication.SingleSignOnService.Web
                     EnableWebApiDiagnostics = true,
                     WebApiDiagnosticsIsVerbose = true,
                 },
+#endif
 
                 RequireSsl = false,
-#endif
             };
 
-            app.UseIdentityServer(options);
+            app.Map("/sso", ssoApp =>
+            {
+                ssoApp.UseIdentityServer(options);
+            });
+
+            app.Run(async context =>
+            {
+                if (context.Request.Path.Value == "/")
+                {
+                    await context.Response.WriteAsync(
+                        @"<!DOCTYPE html><html><head><meta charset=""utf-8""><meta http-equiv=""X-UA-Compatible"" content=""IE=edge"" /><meta name=""viewport"" content = ""width=device-width, initial-scale=1.0"" />" +
+                        @"<title>AppSyndication Single Sign-on Service</title>" +
+                        @"</head>" +
+                        @"<body lang=""en""><h1>AppSyndication Single Sign-on Service</h1><a href=""/sso/"">Go here</a></body>" +
+                        @"</html>");
+                }
+                else
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                }
+            });
 
             Trace.TraceInformation("Started.");
         }
@@ -90,6 +121,19 @@ namespace AppSyndication.SingleSignOnService.Web
 
             var factory = new IdentityServerServiceFactory();
 
+            var viewOptions = new DefaultViewServiceOptions();
+#if DEBUG
+            viewOptions.CacheViews = false;
+#endif
+            viewOptions.Stylesheets.Add("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css");
+            viewOptions.Stylesheets.Add("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css");
+            viewOptions.Stylesheets.Add("https://appsyndication.azureedge.net/assets/css/style.css");
+            viewOptions.Scripts.Add("http://code.jquery.com/jquery-1.12.3.min.js");
+            viewOptions.Scripts.Add("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js");
+            viewOptions.Scripts.Add("https://appsyndication.azureedge.net/assets/js/script.js");
+
+            factory.ConfigureDefaultViewService(viewOptions);
+
             var scopes = Scopes.Get();
 
             var scopeStore = new InMemoryScopeStore(scopes);
@@ -101,17 +145,17 @@ namespace AppSyndication.SingleSignOnService.Web
             factory.ClientStore = new Registration<IClientStore>(clientStore);
 
             factory.UserService = new Registration<IUserService, UserService>();
-            factory.Register(new Registration<AtsUserAccountService>());
-            factory.Register(new Registration<AtsUserAccountRepository>());
-            factory.Register(new Registration<AtsUserAccountConfig>(r => new AtsUserAccountConfig(connectionString)));
+            factory.Register(new Registration<AtsUserService>());
+            factory.Register(new Registration<AtsUserRepository>());
+            factory.Register(new Registration<AtsUserServiceConfig>(r => new AtsUserServiceConfig(connectionString)));
 
             return factory;
         }
     }
 
-    public class UserService : MembershipRebootUserService<AtsUserAccount>
+    public class UserService : MembershipRebootUserService<AtsUser>
     {
-        public UserService(AtsUserAccountService userService)
+        public UserService(AtsUserService userService)
             : base(userService)
         {
         }
