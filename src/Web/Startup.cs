@@ -127,10 +127,10 @@ namespace AppSyndication.SingleSignOnService.Web
 #endif
             viewOptions.Stylesheets.Add("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css");
             viewOptions.Stylesheets.Add("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css");
-            viewOptions.Stylesheets.Add("https://appsyndication.azureedge.net/assets/css/style.css");
+            viewOptions.Stylesheets.Add("https://appsyndication.azureedge.net/assets/css/site.css");
             viewOptions.Scripts.Add("http://code.jquery.com/jquery-1.12.3.min.js");
             viewOptions.Scripts.Add("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js");
-            viewOptions.Scripts.Add("https://appsyndication.azureedge.net/assets/js/script.js");
+            viewOptions.Scripts.Add("https://appsyndication.azureedge.net/assets/js/site.js");
 
             factory.ConfigureDefaultViewService(viewOptions);
 
