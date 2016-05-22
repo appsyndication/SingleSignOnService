@@ -147,7 +147,7 @@ namespace AppSyndication.SingleSignOnService.Web
             factory.UserService = new Registration<IUserService, UserService>();
             factory.Register(new Registration<AtsUserService>());
             factory.Register(new Registration<AtsUserRepository>());
-            factory.Register(new Registration<AtsUserServiceConfig>(r => new AtsUserServiceConfig(connectionString)));
+            factory.Register(new Registration<AtsUserServiceConfig>(r => new AtsUserServiceConfig(connectionString, "appsyndication")));
 
             return factory;
         }

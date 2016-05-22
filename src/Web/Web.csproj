@@ -88,7 +88,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="FireGiant.MembershipReboot.AzureStorage, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FireGiant.MembershipReboot.AzureStorage.0.0.1-build3\lib\net451\FireGiant.MembershipReboot.AzureStorage.dll</HintPath>
+      <HintPath>..\..\packages\FireGiant.MembershipReboot.AzureStorage.0.0.1-build4\lib\net451\FireGiant.MembershipReboot.AzureStorage.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IdentityModel.Net45, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
