@@ -139,7 +139,7 @@ namespace AppSyndication.SingleSignOnService.Web
             var scopeStore = new InMemoryScopeStore(scopes);
             factory.ScopeStore = new Registration<IScopeStore>(scopeStore);
 
-            var clients = Clients.Get();
+            var clients = Clients.Get(environment);
 
             var clientStore = new InMemoryClientStore(clients);
             factory.ClientStore = new Registration<IClientStore>(clientStore);

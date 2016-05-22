@@ -31,5 +31,7 @@ namespace AppSyndication.SingleSignOnService.Web
         public string CertificateThumprint => base.GetSetting("CertificateThumbprint");
 
         public string PublicOrigin => base.GetSetting("PublicOrigin");
+
+        public string AccountServiceSecret => base.GetSetting("AccountServiceSecret");
     }
 }

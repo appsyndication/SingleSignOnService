@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using IdentityServer3.Core;
 using IdentityServer3.Core.Models;
 
@@ -7,10 +6,38 @@ namespace AppSyndication.SingleSignOnService.Web
 {
     public static class Clients
     {
-        public static List<Client> Get()
+        public static List<Client> Get(SsoServiceEnvironmentConfiguration environment)
         {
             var clients = new List<Client>
             {
+                new Client
+                {
+                    Enabled = true,
+                    ClientName = "AppSyndication Account Service",
+                    ClientId="as-ac",
+                    ClientSecrets = new List<Secret>()
+                    {
+                        new Secret(environment.AccountServiceSecret.Sha256())
+                    },
+
+                    Flow = Flows.AuthorizationCode,
+
+                    RedirectUris = new List<string>
+                    {
+                        "http://www.appsyndication.com/account/signin-oidc",
+                        "https://as-ac.azurewebsites.net/account/signin-oidc",
+                        "https://localhost:4101/account/signin-oidc",
+                        "http://localhost:4001/account/signin-oidc",
+                    },
+
+                    //PostLogoutRedirectUris = new List<string>
+                    //{
+                    //    "https://localhost:44319/logout"
+                    //},
+
+                    AllowAccessToAllScopes = true
+                },
+
                 new Client
                 {
                     Enabled = true,
@@ -34,8 +61,8 @@ namespace AppSyndication.SingleSignOnService.Web
                     //},
 
                     AllowAccessToAllScopes = true
-                }
-                ,
+                },
+
                 new Client
                 {
                     Enabled = true,
