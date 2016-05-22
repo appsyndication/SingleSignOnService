@@ -35,7 +35,8 @@ namespace AppSyndication.SingleSignOnService.Web
                     //    "https://localhost:44319/logout"
                     //},
 
-                    AllowAccessToAllScopes = true
+                    AllowAccessToAllScopes = true,
+                    RequireConsent = false,
                 },
 
                 new Client
