@@ -38,9 +38,9 @@ namespace AppSyndication.SingleSignOnService.Web
 
                 CspOptions = new CspOptions()
                 {
-                    FontSrc = "https://appsyndication.azureedge.net https://maxcdn.bootstrapcdn.com",
+                    FontSrc = "'self' https://maxcdn.bootstrapcdn.com https://fonts.gstatic.com",
                     ScriptSrc = "https://appsyndication.azureedge.net https://code.jquery.com https://maxcdn.bootstrapcdn.com",
-                    StyleSrc = "https://appsyndication.azureedge.net https://maxcdn.bootstrapcdn.com",
+                    StyleSrc = "https://appsyndication.azureedge.net https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com",
                 },
 
                 Factory = ConfigureFactory(environment),
@@ -78,7 +78,7 @@ namespace AppSyndication.SingleSignOnService.Web
                 if (context.Request.Path.Value == "/")
                 {
                     await context.Response.WriteAsync(
-                        @"<!DOCTYPE html><html><head><meta charset=""utf-8""><meta http-equiv=""X-UA-Compatible"" content=""IE=edge"" /><meta name=""viewport"" content = ""width=device-width, initial-scale=1.0"" />" +
+                        @"<!DOCTYPE html><html><head><meta charset=""utf-8""><meta http-equiv=""X-UA-Compatible"" content=""IE=edge"" /><meta name=""viewport"" content=""width=device-width, initial-scale=1.0"" />" +
                         @"<title>AppSyndication Single Sign-on Service</title>" +
                         @"</head>" +
                         @"<body lang=""en""><h1>AppSyndication Single Sign-on Service</h1><a href=""/sso/"">Go here</a></body>" +
@@ -125,12 +125,15 @@ namespace AppSyndication.SingleSignOnService.Web
 #if DEBUG
             viewOptions.CacheViews = false;
 #endif
-            viewOptions.Stylesheets.Add("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css");
-            viewOptions.Stylesheets.Add("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css");
-            viewOptions.Stylesheets.Add("https://appsyndication.azureedge.net/assets/css/site.css");
-            viewOptions.Scripts.Add("http://code.jquery.com/jquery-1.12.3.min.js");
+            viewOptions.Stylesheets.Add("https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/united/bootstrap.min.css");
+            viewOptions.Stylesheets.Add("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css");
+            viewOptions.Stylesheets.Add("https://appsyndication.azureedge.net/css/site.css");
+#if DEBUG
+            viewOptions.Stylesheets.Add("/sso/css/site.css");
+#endif
+            viewOptions.Scripts.Add("https://code.jquery.com/jquery-1.12.3.min.js");
             viewOptions.Scripts.Add("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js");
-            viewOptions.Scripts.Add("https://appsyndication.azureedge.net/assets/js/site.js");
+            viewOptions.Scripts.Add("https://appsyndication.azureedge.net/js/site.js");
 
             factory.ConfigureDefaultViewService(viewOptions);
 
