@@ -24,6 +24,7 @@ namespace AppSyndication.SingleSignOnService.Web
 
                     RedirectUris = new List<string>
                     {
+                        "https://www.appsyndication.com/account/signin-oidc",
                         "http://www.appsyndication.com/account/signin-oidc",
                         "https://as-ac.azurewebsites.net/account/signin-oidc",
                         "https://localhost:4101/account/signin-oidc",
