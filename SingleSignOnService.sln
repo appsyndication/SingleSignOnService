@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{73A3F1D3-9026-4E61-AB0A-77CC3CD123A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RC1_Web", "src\RC1_Web\RC1_Web.csproj", "{73A3F1D3-9026-4E61-AB0A-77CC3CD123A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
