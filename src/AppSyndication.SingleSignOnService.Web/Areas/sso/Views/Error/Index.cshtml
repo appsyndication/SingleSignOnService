@@ -1,0 +1,30 @@
+﻿@model ErrorViewModel
+
+@{
+    var description = Model?.Error?.ErrorDescription ?? "Sorry, there was an unexpected error.";
+    var code = Model?.Error?.ErrorCode;
+    var requestId = Model?.Error?.RequestId;
+}
+
+<div class="error-page">
+    <div class="page-header">
+        <h1>Error</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="alert alert-danger">
+                <strong hide-if-null="code">
+                    <em>
+                        @code
+                    </em>
+                </strong>
+
+                @description
+            </div>
+
+            <div hide-if-null="request_id" class="request-id">Request Id: @requestId</div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,21 @@
+﻿@model PasswordResetViewModel
+@{
+    ViewData["Title"] = "Reset Password";
+    ViewData["Subtitle"] = "Where should we send the password reset?";
+}
+<div class="row mt25">
+    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <form role="form" method="post">
+            <fieldset>
+                <legend>@ViewData["Title"]</legend>
+                <p class="sublegend">@ViewData["Subtitle"]</p>
+
+                @Html.EditorFor(m => m.Email)
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-envelope-o" aria-hidden="true"></i> Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

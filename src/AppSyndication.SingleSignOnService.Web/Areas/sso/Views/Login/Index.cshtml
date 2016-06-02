@@ -1,0 +1,31 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Sign in";
+    ViewData["Subtitle"] = "Welcome! We're glad you're here.";
+}
+<div class="row mt25">
+    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <form role="form" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
+            <fieldset>
+                <legend>@ViewData["Title"]</legend>
+                <p class="sublegend">@ViewData["Subtitle"]</p>
+
+                @Html.EditorFor(m => m.UserName)
+                @Html.EditorFor(m => m.Password)
+                <div class="form-group">
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" type="checkbox" value="true">
+                        <strong>Remember Me</strong>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Sign in <i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                </div>
+            </fieldset>
+        </form>
+        <hr />
+        <p><i class="fa fa-key fa-fw"></i> <a asp-action="Reset" asp-controller="Password" asp-area="sso">Forgot your password?</a></p>
+        <p><i class="fa fa-user fa-fw"></i> Want to <a href="/account/join/">create an account?</a></p>
+    </div>
+</div>

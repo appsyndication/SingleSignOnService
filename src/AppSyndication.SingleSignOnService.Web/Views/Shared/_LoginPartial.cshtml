@@ -1,0 +1,11 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@*@inject UserManager<ApplicationUser> UserManager*@
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li><form asp-area="sso" asp-controller="Logout"  asp-action="Index" method="post" id="logoutForm" class="navbar-right"><button type="submit" class="btn btn-link navbar-btn navbar-link"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign out</button></form></li>
+}
+@*else
+{
+    <li><a asp-area="sso" asp-controller="Login" asp-action="Index"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign in</a></li>
+}*@

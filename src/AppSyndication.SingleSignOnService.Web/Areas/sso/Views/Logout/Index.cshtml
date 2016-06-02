@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Signed out";
+    ViewData["Subtitle"] = "Happy trails to you!";
+}
+<div class="row mt25">
+    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <h2 class="legend">@ViewData["Title"]</h2>
+        <p class="sublegend">@ViewData["Subtitle"]</p>
+
+        <div error-summary="@ViewData.ModelState"></div>
+    </div>
+</div>

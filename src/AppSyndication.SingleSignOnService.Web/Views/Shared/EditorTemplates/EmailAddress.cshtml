@@ -1,0 +1,9 @@
+﻿@model string
+@{
+    var hasErrors = this.ViewData.ModelState[this.ViewData.ModelExplorer.Metadata.PropertyName]?.Errors.Any() == true ? "has-error" : null;
+}
+<div class="form-group @hasErrors">
+    <label asp-for="@Model"></label>
+    <input asp-for="@Model" class="form-control">
+    <span asp-validation-for="@Model" class="help-block"></span>
+</div>

@@ -1,0 +1,23 @@
+﻿@model PasswordChangeViewModel
+@{
+    ViewData["Title"] = "Change Password";
+    ViewData["Subtitle"] = "What password would you like now?";
+}
+<div class="row mt25">
+    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <form role="form" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
+            <fieldset>
+                <legend>@ViewData["Title"]</legend>
+                <p class="sublegend">@ViewData["Subtitle"]</p>
+
+                @Html.EditorFor(m => m.UserName)
+                @Html.EditorFor(m => m.Password)
+                @Html.EditorFor(m => m.ConfirmPassword)
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Sign in <i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
